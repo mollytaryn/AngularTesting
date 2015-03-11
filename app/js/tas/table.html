@@ -1,0 +1,42 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Profile Pic</th>
+      <th>Nick Name</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Cohort</th>
+      <th>Current</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="hellofriends" ng-repeat="(id, person) in tas.data
+      | filter:friendFilterQuery
+      | orderBy:['current','-nickName']:friendReverse">
+      <td><img src="{{person.profilePic}}" class="profilePic"></td>
+      <td>
+        <span ng-hide="tas.editing" ng-dblclick="tas.editing=true">{{person.name}}</span>
+        <input ng-show="tas.editing" ng-model="person.name">
+      </td>
+      <td>{{person.nickName | toRansomCase}}</td>
+      <td>{{person.firstName}}</td>
+      <td>{{person.lastName}}</td>
+      <td>{{person.cohort}}</td>
+      <td><input type="checkbox" ng-change="tas.updateTA(id)" ng-model="person.current"></td>
+      <td>
+        <a class="btn btn-default" href="/#/tas/{{id}}">View</a>
+        <button ng-click="tas.removeTA(id)">x</button>
+      </td>
+      <td>
+        <a class="btn btn-default" href="/#/tas/{{id}}/edit">Edit</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Search: <input ng-model="friendFilterQuery">
+<br>
+Sort:
+<button ng-click="friendReverse=!friendReverse">Change Sort</button>
+<br>
